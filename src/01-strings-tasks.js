@@ -66,7 +66,8 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-  return value.match(/(?<=Hello, ).*?(?=\\!)/)[0];
+  // eslint-disable-next-line no-useless-escape
+  return value.match(/(?<=Hello, ).*?(?=\!)/)[0];
 }
 
 
@@ -146,7 +147,8 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-  return str.match(/(?<=^<).*?(?=\\>$)/)[0];
+  // eslint-disable-next-line no-useless-escape
+  return str.match(/(?<=^<).*?(?=\>$)/)[0];
 }
 
 
@@ -209,7 +211,7 @@ function extractEmails(str) {
 function getRectangleString(width, height) {
   let up = '┌┐\n';
   let down = '└┘\n';
-  let middle = height > 2 ? '││\n' : '';
+  const middle = `│${' '.repeat(width - 2)}│\n`;
 
   function insert(string, position, element) {
     return `${string.slice(0, position)}${element}${string.slice(position)}`;
@@ -218,14 +220,8 @@ function getRectangleString(width, height) {
   for (let i = 1; i < width - 1; i += 1) {
     up = insert(up, i, '─');
     down = insert(down, i, '─');
-    middle = insert(middle, i, ' ');
   }
-
-  for (let i = 1; i < height - 2; i += 1) {
-    middle += middle;
-  }
-
-  return up + middle + down;
+  return up + middle.repeat(height - 2) + down;
 }
 
 
