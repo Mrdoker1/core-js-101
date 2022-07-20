@@ -66,7 +66,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-  return value.match(/(?<=Hello, ).*?(?=\!)/)[0];
+  return value.match(/(?<=Hello, ).*?(?=\\!)/)[0];
 }
 
 
@@ -112,7 +112,7 @@ function removeLeadingAndTrailingWhitespaces(value) {
  */
 function repeatString(value, count) {
   let result = '';
-  for(let i = 0 ; i < count; i++){
+  for (let i = 0; i < count; i += 1) {
     result += value;
   }
   return result;
@@ -146,7 +146,7 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-  return str.match(/(?<=^<).*?(?=\>$)/)[0];
+  return str.match(/(?<=^<).*?(?=\\>$)/)[0];
 }
 
 
@@ -180,7 +180,7 @@ function convertToUpperCase(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-  return str.split(';')
+  return str.split(';');
 }
 
 /**
@@ -208,20 +208,20 @@ function extractEmails(str) {
  */
 function getRectangleString(width, height) {
   let up = '┌┐\n';
-  let down = '└┘\n'
+  let down = '└┘\n';
   let middle = height > 2 ? '││\n' : '';
 
-  function insert(string, position, element){
-    return string.slice(0, position) + `${element}` + string.slice(position);
+  function insert(string, position, element) {
+    return `${string.slice(0, position)}${element}${string.slice(position)}`;
   }
 
-  for (let i = 1; i < width - 1; i++) {
+  for (let i = 1; i < width - 1; i += 1) {
     up = insert(up, i, '─');
     down = insert(down, i, '─');
     middle = insert(middle, i, ' ');
   }
 
-  for (let i = 1; i < height - 2; i++) {
+  for (let i = 1; i < height - 2; i += 1) {
     middle += middle;
   }
 
@@ -246,14 +246,10 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-  let encoded = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-  let decoded = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
-  let getIndex = (char) => {
-      return encoded.indexOf(char);
-    }
-  let traverse = (char) => {
-      return getIndex(char) > -1 ? decoded[getIndex(char)] : char;
-    }
+  const encoded = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const decoded = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  const getIndex = (char) => encoded.indexOf(char);
+  const traverse = (char) => (getIndex(char) > -1 ? decoded[getIndex(char)] : char);
   return str.split('').map(traverse).join('');
 }
 
@@ -271,12 +267,10 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-
-  if (typeof value === 'string' || value instanceof String){
+  if (typeof value === 'string' || value instanceof String) {
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 
@@ -305,10 +299,10 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-  let deck =  ['A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
-              'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
-              'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
-              'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠']
+  const deck = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠'];
   return deck.indexOf(value);
 }
 

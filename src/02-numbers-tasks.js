@@ -52,8 +52,8 @@ function getCircleCircumference(radius) {
  *  -3, 3  => 0
  */
 function getAverage(value1, value2) {
-  if(value1 == value2) return value1;
-  return (value1 / 2) + (value2 / 2) + ((value1 % 2 + value2 % 2) / 2);
+  if (value1 === value2) return value1;
+  return (value1 / 2) + (value2 / 2) + (((value1 % 2) + (value2 % 2)) / 2);
 }
 
 /**
@@ -72,9 +72,9 @@ function getAverage(value1, value2) {
  *   (-5,0) (10,-10) => 18.027756377319946
  */
 function getDistanceBetweenPoints(x1, y1, x2, y2) {
-  let x = x1 - x2;
-  let y = y1 - y2;
-  return Math.sqrt( x * x + y * y );
+  const x = x1 - x2;
+  const y = y1 - y2;
+  return Math.sqrt(x * x + y * y);
 }
 
 /**
@@ -113,7 +113,6 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (1,2)     => 0
  */
 function getAngleBetweenVectors(x1, y1, x2, y2) {
-
   // let xi = x2 - x1
   // let yi = y2 - y1
 
@@ -133,8 +132,8 @@ function getAngleBetweenVectors(x1, y1, x2, y2) {
  *     0     => 0
  */
 function getLastDigit(value) {
-  let result = `${value}`
-  return parseInt(result[result.length - 1]);
+  const result = `${value}`;
+  return parseInt(result[result.length - 1], 10);
 }
 
 
@@ -189,7 +188,14 @@ function getParallelepipedDiagonal(a, b, c) {
  *   1678, 3  => 2000
  */
 function roundToPowerOfTen(num, pow) {
-  return Math.round(num / Math.pow(10, pow)) * Math.pow(10, pow);
+  function getPow(power) {
+    let result = 1;
+    for (let i = 1; i < power + 1; i += 1) {
+      result *= 10;
+    }
+    return result;
+  }
+  return Math.round(num / getPow(pow)) * getPow(pow);
 }
 
 /**
@@ -210,16 +216,16 @@ function roundToPowerOfTen(num, pow) {
  *   17 => true
  */
 function isPrime(n) {
-  if (n == 1) {
+  if (n === 1) {
     return false;
-  } else if (n > 1) {
-      for (let i = 2; i < n; i++) {
-          if (n % i == 0) {
-              return false;
-          }
+  } if (n > 1) {
+    for (let i = 2; i < n; i += 1) {
+      if (n % i === 0) {
+        return false;
       }
-      return true;
+    }
   }
+  return true;
 }
 
 /**
@@ -238,11 +244,12 @@ function isPrime(n) {
  *   toNumber(new Number(42), 0) => 42
  */
 function toNumber(value, def) {
-  if(value !== null) {
-    if(`${value}`.length > 0) {
-        if (!isNaN(value)) {
-            return parseInt(value);
-        }
+  if (value !== null) {
+    if (`${value}`.length > 0) {
+      // eslint-disable-next-line no-restricted-globals
+      if (!isNaN(value)) {
+        return parseInt(value, 10);
+      }
     }
   }
   return def;
